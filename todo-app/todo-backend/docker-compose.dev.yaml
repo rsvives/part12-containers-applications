@@ -15,8 +15,8 @@ services:
     restart: always
     ports:
       - 6379:6379
-    # volumes:
-    #   - ./redis/cache:/data
+    volumes:
+      - ./redis/cache:/data
 
 volumes:
   mongo_data:
