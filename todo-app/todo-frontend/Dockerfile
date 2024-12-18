@@ -1,16 +1,26 @@
-# The first FROM is now a stage called build-stage
-FROM node:20 AS build-stage 
+#test
+FROM node:20 AS test
 
 WORKDIR /usr/src/app
 
+COPY . .
+
+RUN npm ci
+RUN npm run test
+
+
+# build
+FROM test AS build-stage
+
+WORKDIR /usr/src/app
 COPY . .
 
 ENV VITE_BACKEND_URL=http://localhost:3000
 
 RUN npm ci
 
-
 RUN npm run build
+
 
 # This is a new stage, everything before this is gone, except for the files that we want to COPY
 
