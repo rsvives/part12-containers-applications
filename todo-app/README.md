@@ -19,7 +19,7 @@ On directory `./todo-backend/`:
 REDIS_URL=redis://localhost:6379 MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database npm run dev                               
 ```
 
-### 3. Start frontend
+### 3. Build frontend
 Build and run docker file located on `./todo-frontend/Dockerfile`
 
 On directory `./todo-frontend/`:
@@ -31,4 +31,9 @@ docker build . -t nginx
 Running the image in a container named "frontend" on port 80:
 ```
 docker run --name frontend -p 80:80 nginx
+```
+### 4. Start frontend
+Use the command passing the backend url:
+```
+VITE_BACKEND_URL=http://localhost:3000 npm run dev
 ```
