@@ -3,7 +3,8 @@ services:
   mongo:
     image: mongo
     ports:
-      - 3456:27017
+      # - 3456:27017
+      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -19,6 +20,23 @@ services:
     command: [ 'redis-server', '--appendonly', 'yes' ] # Overwrite the CMD
     volumes:
       - ./redis_data:/data
+
+  server:
+    image: dev-server
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
+    container_name: dev-server
+
+  debug-helper:
+    image: busybox
 
 volumes:
   mongo_data:
